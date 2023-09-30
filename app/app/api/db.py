@@ -4,7 +4,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import sessionmaker
 from starlette import status
 
-from src.conf.config import settings
+from app.app.api.config import settings
 
 SQLALCHEMY_DATABASE_URL = settings.sqlalchemy_database_url
 
