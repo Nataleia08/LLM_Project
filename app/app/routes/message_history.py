@@ -16,3 +16,12 @@ async def save_messages(text: str, chat_id: str, current_user: User = Depends(au
     history = PostgresChatMessageHistory(connection_string= setting.sqlalchemy_database_url, session_id=chat_id, table_name=)
     history.add_user_message(text)
     return None
+
+
+@router.get("/save_massages/chat_id")
+async def get_history_messages():
+    
+    
+
+@router.delete("/save_massages/chat_id")
+async def get_history_messages()
