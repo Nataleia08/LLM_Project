@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 from starlette.middleware.cors import CORSMiddleware   #------------
 
-from app.app.api import settings
+from app.app.database.config import settings
 from app.app.api import get_db
 
 app = FastAPI()
@@ -38,4 +38,4 @@ def healthchecker(db: Session = Depends(get_db)):
 
 
 if __name__ == '__main__':
-    uvicorn.run(app, host='localhost', port=8000)
+    # uvicorn.run(app, host='https://llm-project-2023.fly.dev', port=8000)
