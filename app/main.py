@@ -1,4 +1,4 @@
-import time
+#import uvicorn
 from typing import Callable
 
 from fastapi import FastAPI, Depends, HTTPException, Request
@@ -10,13 +10,14 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 from starlette.middleware.cors import CORSMiddleware   #------------
 
-from app.app.database.config import settings
-from app.app.api import get_db
+from app.database.config import settings
+from app.database.db import get_db
+from app.routes import auth, users, history
 
 app = FastAPI()
 
-templates = Jinja2Templates(directory='templates')
-app.mount('/static', StaticFiles(directory='static'), name='static')
+templates = Jinja2Templates(directory='app/templates')
+app.mount('/static', StaticFiles(directory='app/static'), name='static')
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -36,6 +37,11 @@ def healthchecker(db: Session = Depends(get_db)):
         print(e)
         raise HTTPException(status_code=500, detail="Error connecting to the database")
 
+app.include_router(auth.router, prefix="/api")
+app.include_router(users.router, prefix="/api")
+app.include_router(history.router, prefix="/api")
+
 
 if __name__ == '__main__':
     # uvicorn.run(app, host='https://llm-project-2023.fly.dev', port=8000)
+    uvicorn.run(app, host='localhost', port=8000)

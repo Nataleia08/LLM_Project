@@ -9,10 +9,9 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 
-from src.database.db import get_db
-from src.repository import users as repository_users
-from src.conf.config import settings
-from src.conf import messages
+from app.database.db import get_db
+from app.repository import users as repository_users
+from app.database.config import settings
 
 
 class Auth:

@@ -1,9 +1,9 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 import cloudinary
 
 
 class Settings(BaseSettings):
-    sqlalchemy_database_url: str = "postgres://rtnykatl:xC7vxKxt3yNTUAKmAdHsl7mZhpdKSey1@cornelius.db.elephantsql.com/rtnykatl"
+    sqlalchemy_database_url: str = "postgresql://rtnykatl:xC7vxKxt3yNTUAKmAdHsl7mZhpdKSey1@cornelius.db.elephantsql.com/rtnykatl"
     jwt_secret_key: str = "secret"
     jwt_algorithm: str = "HS256"
 
