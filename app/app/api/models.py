@@ -44,5 +44,11 @@ class MessageHistory(Base):
     user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), unique=True, nullable=False)
     user = relationship('User', backref='message_history')
     chat_id = Column('chat_id', ForeignKey('chat.id', ondelete='CASCADE'), unique=True, nullable=False)
-    user = relationship('Chat', backref='message_history')
+    chat = relationship('Chat', backref='message_history')
 
+class Chat(Base):
+    __tablename__ = 'chat'
+    id = Column(Integer, primary_key=True)
+    created_at = Column('crated_at', DateTime, default=func.now())
+    user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), unique=True, nullable=False)
+    user = relationship('User', backref='chat')

@@ -18,7 +18,7 @@ router = APIRouter(prefix="/history", tags=["history"])
 
 @router.post("/save_massegas")
 async def save_messages(text: str, chat_id: str, db: Session = Depends(get_db), current_user: User = Depends(auth_service.get_current_user)):
-    history = PostgresChatMessageHistory(connection_string= setting.sqlalchemy_database_url, session_id=chat_id, table_name='message_history')
+    history = PostgresChatMessageHistory(connection_string= settings.sqlalchemy_database_url, session_id=chat_id, table_name='message_history')
     history.add_user_message(text)
     return None
 
