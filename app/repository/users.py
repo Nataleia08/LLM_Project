@@ -3,8 +3,8 @@ import logging
 from sqlalchemy.orm import Session, Query
 from libgravatar import Gravatar
 
-from app.api.models import User
-from app.api.schemas import UserModel
+from app.app.models import User
+from app.app.schemas import UserModel
 
 
 async def get_user_by_email(email: str, db: Session) -> User | None:

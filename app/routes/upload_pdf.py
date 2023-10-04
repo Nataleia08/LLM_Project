@@ -4,7 +4,7 @@ import cloudinary
 from cloudinary.uploader import upload
 from config import CLOUDINARY
 
-router = APIRouter()
+router = APIRouter(prefix="/upload_pdf", tags=["upload_pdf"])
 
 templates = Jinja2Templates(directory="templates")
 
@@ -14,11 +14,11 @@ cloudinary.config(
     api_secret=CLOUDINARY["api_secret"]
 )
 
-@router.get("/upload-pdf/")
+@router.get("/from")
 async def display_upload_form(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-@router.post("/upload-pdf/submit/")
+@router.post("/submit")
 async def handle_file_upload(file: UploadFile = File(...)):
     if not file.filename.endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Invalid file type. Only PDF allowed.")

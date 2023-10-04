@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordRequestForm, HTTPAuthorizationCredent
 from sqlalchemy.orm import Session
 
 from app.database.db import get_db
-from app.api.schemas import UserModel, UserResponse, TokenModel
+from app.app.schemas import UserModel, UserResponse, TokenModel
 from app.repository import users as repository_users
 from app.services.auth import auth_service
 
