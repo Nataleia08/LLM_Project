@@ -12,7 +12,8 @@ from starlette.middleware.cors import CORSMiddleware   #------------
 
 from app.database.config import settings
 from app.database.db import get_db
-from app.routes import auth, users, history
+from app.routes import auth, users, history, upload
+
 
 app = FastAPI()
 
@@ -40,6 +41,8 @@ def healthchecker(db: Session = Depends(get_db)):
 app.include_router(auth.router, prefix="/api")
 app.include_router(users.router, prefix="/api")
 app.include_router(history.router, prefix="/api")
+app.include_router(upload.router, prefix="/api")
+
 
 
 if __name__ == '__main__':
