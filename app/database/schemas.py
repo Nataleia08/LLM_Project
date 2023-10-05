@@ -1,6 +1,6 @@
 from typing import Optional
 
-from app.api.models import UserRole, User
+from app.database.models import UserRole, User
 from datetime import datetime, date
 from pydantic import BaseModel, Field, constr, EmailStr
 

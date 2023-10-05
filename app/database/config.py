@@ -1,6 +1,11 @@
 from pydantic_settings import BaseSettings
 import cloudinary
 
+CLOUDINARY = {
+    "cloud_name": "dj1qijvd0",
+    "api_key": "863185752276523",
+    "api_secret": "WUyrtEsJSgjTOHEyev1kMGFamgo"
+}
 
 class Settings(BaseSettings):
     sqlalchemy_database_url: str = "postgresql://rtnykatl:xC7vxKxt3yNTUAKmAdHsl7mZhpdKSey1@cornelius.db.elephantsql.com/rtnykatl"
