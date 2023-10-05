@@ -7,6 +7,7 @@ from app.app.models import User
 from app.services.auth import auth_service
 from app.repository.user_profile import create_user_profile
 from app.database.db import get_db
+from sqlalchemy.orm import Session
 
 
 router = APIRouter(prefix="/upload-pdf", tags=["upload-pdf"])
