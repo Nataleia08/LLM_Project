@@ -1,4 +1,5 @@
 from fastapi import APIRouter, File, UploadFile, HTTPException, Request
+from fastapi.responses import RedirectResponse, PlainTextResponse
 from fastapi.templating import Jinja2Templates
 import cloudinary
 from cloudinary.uploader import upload
@@ -27,8 +28,9 @@ async def handle_file_upload(file: UploadFile = File(...)):
         upload_result = None
         with file.file as f:
             upload_result = upload(f, resource_type="raw", public_id=f"{file.filename}", folder="files", format="pdf")
-        # return {"info": f"file '{file.filename}' uploaded successfully", "url": upload_result['url']}
-        return templates.TemplateResponse("chat.html")
+        result =  {"info": f"file '{file.filename}' uploaded successfully", "url": upload_result['url']}
+        if result:
+            return RedirectResponse("/api/chat/")
     except Exception as e:
         raise HTTPException(status_code=400, detail="File not uploaded")
 
