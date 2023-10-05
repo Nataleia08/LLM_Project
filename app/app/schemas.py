@@ -33,11 +33,7 @@ class TokenModel(BaseModel):
 
 
 class UserProfileCreate(BaseModel):
-    first_name: str
-    last_name: str
-    email: EmailStr
-    phone: str
-    date_of_birth: date
+    file_path: str
 
 
 class UserProfileResponse(BaseModel):
@@ -45,6 +41,7 @@ class UserProfileResponse(BaseModel):
     user_id: int
     first_name: str
     last_name: str
+    file_path: str
     email: EmailStr
     phone: str
     date_of_birth: date

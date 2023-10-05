@@ -7,9 +7,9 @@ class Settings(BaseSettings):
     jwt_secret_key: str = "secret"
     jwt_algorithm: str = "HS256"
 
-    cloud_name: str = "cloudinary name"
-    cloud_api_key: str = "000000000000000000"
-    cloud_api_secret: str = "secret"
+    cloud_name: str = "dj1qijvd0"
+    cloud_api_key: str = "863185752276523"
+    cloud_api_secret: str = "WUyrtEsJSgjTOHEyev1kMGFamgo"
 
     class Config:
         env_file = ".env"
@@ -23,6 +23,5 @@ def config_cloudinary():
         api_secret=settings.cloud_api_secret,
         secure=True
     )
-
 
 settings = Settings()
