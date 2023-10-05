@@ -62,3 +62,15 @@ class HistoryResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class ChatModel(BaseModel):
+    id: int
+    title_chat: str = Field(max_length=500)
+    file_url: str | None
+    chat_data: str | None
+    created_at: datetime | None
+    user_id: int
+
+    class Config:
+        orm_mode = True
