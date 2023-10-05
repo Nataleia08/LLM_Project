@@ -24,6 +24,7 @@ async def display_upload_form(request: Request, current_user: User = Depends(aut
 
 @router.post("/submit/")
 async def handle_file_upload(file: UploadFile = File(...), current_user: User = Depends(auth_service.get_current_user)):
+
     if not file.filename.endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Invalid file type. Only PDF allowed.")
 

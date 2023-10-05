@@ -14,6 +14,7 @@ from app.database.config import settings
 from app.database.db import get_db
 from app.routes import auth, users, history, upload
 
+
 app = FastAPI()
 
 templates = Jinja2Templates(directory='app/templates')
@@ -41,6 +42,8 @@ app.include_router(auth.router, prefix="/api")
 app.include_router(users.router, prefix="/api")
 app.include_router(history.router, prefix="/api")
 app.include_router(upload.router, prefix="/api")
+
+
 
 if __name__ == '__main__':
     # uvicorn.run(app, host='https://llm-project-2023.fly.dev', port=8000)
