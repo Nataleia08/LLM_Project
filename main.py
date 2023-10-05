@@ -12,7 +12,7 @@ from starlette.middleware.cors import CORSMiddleware   #------------
 
 from app.database.config import settings
 from app.database.db import get_db
-from app.routes import auth, users, history, upload
+from app.routes import auth, users, history, upload, chat
 
 
 app = FastAPI()
@@ -42,6 +42,7 @@ app.include_router(auth.router, prefix="/api")
 app.include_router(users.router, prefix="/api")
 app.include_router(history.router, prefix="/api")
 app.include_router(upload.router, prefix="/api")
+app.include_router(chat.router, prefix="/api")
 
 
 
