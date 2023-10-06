@@ -35,9 +35,10 @@ async def handle_file_upload(file: UploadFile = File(...), current_user: User = 
         upload_result = None
         with file.file as f:
             upload_result = upload(f, resource_type="raw", public_id=f"{file.filename}", folder="files", format="pdf")
-        if await create_user_profile(upload_result['url'], file.filename, current_user.id, db) is None:
-            raise HTTPException(status_code=400, detail="File not uploaded")
-        return 
+        new_profile =  await create_user_profile(upload_result['url'], file.filename, current_user.id, db) 
+        if new_profile is None:
+            raise HTTPException(status_code=400, detail="File not uploaded2")
+        return upload_result['url']
         # return {"info": f"file '{file.filename}' uploaded successfully", "url": upload_result['url']}
     except Exception as e:
         raise HTTPException(status_code=400, detail="File not uploaded")
