@@ -4,15 +4,16 @@ from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 import openai
+from langchain.schema.vectorstore import VectorStoreRetriever
 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = "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"
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 
-async def create_llm(file_path: str):
+async def create_llm(memory:VectorStoreRetriever):
     new_llm = OpenAI(openai_api_key=OPENAI_API_KEY)
-    prompt = PromptTemplate(file_path)
-    llm_chain = LLMChain(prompt=prompt, llm=new_llm)
+    # prompt = PromptTemplate(memory)
+    llm_chain = LLMChain(memory = memory, llm=new_llm)
     return llm_chain
 
 

@@ -10,6 +10,7 @@ from app.database.db import get_db
 from sqlalchemy.orm import Session
 
 
+
 router = APIRouter(prefix="/upload-pdf", tags=["upload-pdf"])
 
 templates = Jinja2Templates(directory="templates")
@@ -34,7 +35,7 @@ async def handle_file_upload(file: UploadFile = File(...), current_user: User = 
     try:
         upload_result = None
         with file.file as f:
-            upload_result = upload(f, resource_type="raw", public_id=f"{file.filename}", folder="files", format="pdf")
+            upload_result = upload(f, public_id=f"{file.filename}", folder="files", format="pdf")
         new_profile =  await create_user_profile(upload_result['url'], file.filename, current_user.id, db) 
         if new_profile is None:
             raise HTTPException(status_code=400, detail="File not uploaded2")
@@ -42,3 +43,5 @@ async def handle_file_upload(file: UploadFile = File(...), current_user: User = 
         # return {"info": f"file '{file.filename}' uploaded successfully", "url": upload_result['url']}
     except Exception as e:
         raise HTTPException(status_code=400, detail="File not uploaded")
+
+

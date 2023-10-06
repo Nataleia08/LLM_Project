@@ -6,7 +6,7 @@ authors = ["Nataleia Orlovska <nataleia.orlovska@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "3.11.5"
 alembic = "^1.12.0"
 sqlalchemy = "^2.0.21"
 fastapi = "^0.103.1"
@@ -27,6 +27,9 @@ openai = "^0.28.1"
 websockets = "^11.0.3"
 wsproto = "^1.2.0"
 pypdf = "^3.16.2"
+tiktoken = "^0.5.1"
+faiss-cpu = "^1.7.4"
+aspose-words = "^23.9.0"
 
 
 [build-system]
