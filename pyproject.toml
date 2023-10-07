@@ -30,6 +30,7 @@ pypdf = "^3.16.2"
 tiktoken = "^0.5.1"
 faiss-cpu = "^1.7.4"
 aspose-words = "^23.9.0"
+asyncio = "^3.4.3"
 
 
 [build-system]

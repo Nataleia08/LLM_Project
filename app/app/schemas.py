@@ -53,7 +53,7 @@ class UserProfileResponse(BaseModel):
 class HistoryResponse(BaseModel):
     id: int
     chat_id: int
-    text: str
+    text_message: str
     created_at: datetime
     user_id: int
 

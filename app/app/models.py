@@ -41,9 +41,9 @@ class MessageHistory(Base):
     id = Column(Integer, primary_key=True)
     text_message = Column(String(255), nullable=True)
     created_at = Column('crated_at', DateTime, default=func.now())
-    user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), unique=True, nullable=False)
+    user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     user = relationship('User', backref='message_history')
-    chat_id = Column('chat_id', ForeignKey('chat.id', ondelete='CASCADE'), unique=True, nullable=False)
+    chat_id = Column('chat_id', ForeignKey('chat.id', ondelete='CASCADE'), nullable=False)
     chat = relationship('Chat', backref='message_history')
 
 class Chat(Base):
@@ -53,5 +53,5 @@ class Chat(Base):
     file_url = Column(String, nullable=True)
     chat_data = Column(String, nullable=True)
     created_at = Column('crated_at', DateTime, default=func.now())
-    user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), unique=True, nullable=False)
+    user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     user = relationship('User', backref='chat')

@@ -13,7 +13,7 @@ async def user_history(user_id: str, db: Session) -> List[HistoryResponse] | Non
     return db.query(MessageHistory).filter(MessageHistory.user_id== user_id).all()
 
 async def create_message(chat_id: str, user_id: str, text: str, db: Session) -> HistoryResponse|None:
-    new_message = MessageHistory(text = text, user_id = user_id, chat_id = chat_id)
+    new_message = MessageHistory(text_message = text, user_id = user_id, chat_id = chat_id)
     db.add(new_message)
     db.commit()
     db.refresh(new_message)
