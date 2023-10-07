@@ -9,9 +9,9 @@ from fastapi import UploadFile
 from pydantic.types import conlist
 
 class UserModel(BaseModel):
-    username: str = Field(min_length=5, max_length=16)
+    username: str = Field(min_length=5, max_length=50)
     email: EmailStr
-    password: str = Field(min_length=6, max_length=10)
+    password: str = Field(min_length=6, max_length=50)
 
 
 class UserResponse(BaseModel):

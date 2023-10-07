@@ -75,7 +75,7 @@ class Auth:
                     raise credentials_exception
             else:
                 raise credentials_exception
-        except JWTError as e:  # зачем тут as e если е в дальнейшем не используется ?
+        except JWTError as e:  
             raise credentials_exception
 
         user = await repository_users.get_user_by_email(email, db)

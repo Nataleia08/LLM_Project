@@ -29,8 +29,8 @@ router = APIRouter(prefix="/chat", tags=["chat"])
 templates = Jinja2Templates(directory='app/templates')
 
 @router.get("/")
-async def start_chat(request: Request):
-    return templates.TemplateResponse("chat.html", {"request": request})
+async def start_chat(request: Request, memory, chat_id: int, user_id: int, db: Session = Depends(get_db), current_user: User = Depends(auth_service.get_current_user)):
+    return templates.TemplateResponse("chat.html", {"request": request, "memory": memory, "chat_id": chat_id, "current_user": current_user})
 
 
 # @router.websocket("/ws")
