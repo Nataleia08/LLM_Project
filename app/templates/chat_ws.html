@@ -2,15 +2,17 @@
 <html>
     <head>
         <title>Chat</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <h1>WebSocket Chat</h1>
-        <form action="" onsubmit="sendMessage(event)">
-            <input type="text" id="messageText" autocomplete="off"/>
-            <button>Send</button>
-        </form>
+        <h1>Chat</h1>
         <ul id='messages'>
         </ul>
+        <form action="" onsubmit="sendMessage(event)">
+            <input type="text" id="messageText" autocomplete="off"/>
+            <button color = #6D9BF5>Send</button>
+        </form>
+
         <script>
             var ws = new WebSocket("ws://localhost:8080/ws");
             ws.onmessage = function(event) {

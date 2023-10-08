@@ -18,6 +18,7 @@ from langchain.llms.openai import OpenAIChat
 from langchain.vectorstores import FAISS
 from app.repository import users as repository_users
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer, OAuth2PasswordBearer
+from app.database.config import OPENAI_API_KEY
 
 security = HTTPBearer()
 
@@ -46,7 +47,7 @@ async def crete_llm(request: Request, file: UploadFile = File(...), db: Session 
         pages = loader.load_and_split()
         text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
         docs = text_splitter.split_documents(pages)
-        embeddings = OpenAIEmbeddings()
+        embeddings = OpenAIEmbeddings(openai_api_key = OPENAI_API_KEY)
         new_memory = FAISS.from_documents(docs, embeddings)
         new_memory.save_local("/LLM_PROJECT/Data/llm.yaml")
 

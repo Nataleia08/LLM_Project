@@ -40,18 +40,19 @@ async def root(request: Request):
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
-    new_memory = FAISS.load_local("/LLM_PROJECT/Data/llm.yaml", embeddings=OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY))
-    new_llm = AzureOpenAI(temperature=0.5, max_tokens=500) 
+    new_memory = FAISS.load_local("/LLM_PROJECT/Data/llm.yaml", embeddings=OpenAIEmbeddings(openai_api_key = OPENAI_API_KEY))
+    new_llm = OpenAI() 
     llm_chain = load_qa_chain(new_llm, chain_type="refine")
     await websocket.accept()
     await websocket.send_text("Welcome to the chat!")
     try:
         while True:
             data = await websocket.receive_text()
-            await websocket.send_text(f"You question: {data}")
+            await websocket.send_text(f"Your question: {data}")
             # await repository_history.create_message(chat_id, user_id, data, db)
-            answer = llm_chain({"input_documents": new_memory, "question": data, "language": "English", "existing_answer" : ""}, return_only_outputs=True)
-            await websocket.send_text(f"Answer: {answer}")
+            answer = llm_chain({"input_documents": new_memory.similarity_search(data), "question": data, "language": "English", "existing_answer" : ""}, return_only_outputs=True)
+            text_answer = answer["output_text"]
+            await websocket.send_text(f"Answer: {text_answer}")
             # await websocket.send_text(f"Answer 2: {new_memory.similarity_search(data)}")
             
     except:
