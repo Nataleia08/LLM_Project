@@ -28,5 +28,5 @@ def config_cloudinary():
 
 settings = Settings()
 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = ""
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY

@@ -12,7 +12,7 @@ from starlette.middleware.cors import CORSMiddleware   #------------
 
 from app.database.config import settings
 from app.database.db import get_db
-from app.routes import auth, llm_ws, upload, users, history
+from app.routes import auth, llm_ws, upload_llm, users, history
 from app.routes.auth import signup, login
 from app.database.schemas import UserModel
 from fastapi.security import OAuth2PasswordRequestForm
@@ -55,7 +55,7 @@ def healthchecker(db: Session = Depends(get_db)):
 app.include_router(auth.router, prefix="/api")
 app.include_router(users.router, prefix="/api")
 app.include_router(history.router, prefix="/api")
-app.include_router(upload.router, prefix="/api")
+app.include_router(upload_llm.router, prefix="/api")
 app.include_router(llm_ws.router, prefix="/api")
 
 

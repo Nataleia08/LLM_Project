@@ -41,8 +41,6 @@ async def crete_llm(request: Request, file: UploadFile = File(...), db: Session 
     if not file.filename.endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Invalid file type. Only PDF allowed.")
     with file.file as f:
-        # llm = OpenAIChat()
-        # new_memory = FAISS.aadd_documents([file], llm)
         upload_result = upload(f, resource_type="raw", public_id=f"{file.filename}", folder="files", format="pdf")
         loader = PyPDFLoader(upload_result['url'])
         pages = loader.load_and_split()
