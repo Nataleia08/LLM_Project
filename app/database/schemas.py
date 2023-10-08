@@ -14,6 +14,7 @@ class UserModel(BaseModel):
     password: str = Field(min_length=6, max_length=50)
 
 
+
 class UserResponse(BaseModel):
     id: int = 1
     username: str = "username"
@@ -35,6 +36,13 @@ class TokenModel(BaseModel):
 class UserProfileCreate(BaseModel):
     file_path: str
 
+#     first_name: str
+#     last_name: str
+#     email: EmailStr
+#     phone: str
+#     date_of_birth: date
+
+
 
 class UserProfileResponse(BaseModel):
     id: int
@@ -42,6 +50,7 @@ class UserProfileResponse(BaseModel):
     first_name: str
     last_name: str
     file_path: str
+
     email: EmailStr
     phone: str
     date_of_birth: date
@@ -55,6 +64,18 @@ class HistoryResponse(BaseModel):
     chat_id: int
     text_message: str
     created_at: datetime
+    user_id: int
+
+    class Config:
+        orm_mode = True
+
+
+class ChatModel(BaseModel):
+    id: int
+    title_chat: str = Field(max_length=500)
+    file_url: str | None
+    chat_data: str | None
+    created_at: datetime | None
     user_id: int
 
     class Config:

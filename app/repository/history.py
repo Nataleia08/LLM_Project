@@ -1,8 +1,6 @@
 from typing import List
 
 from sqlalchemy.orm import Session
-
-
 from app.database.models import MessageHistory
 from app.database.schemas import HistoryResponse
 

@@ -55,3 +55,4 @@ class Chat(Base):
     created_at = Column('crated_at', DateTime, default=func.now())
     user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     user = relationship('User', backref='chat')
+

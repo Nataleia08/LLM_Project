@@ -1,6 +1,5 @@
 import uvicorn
 from typing import Callable
-
 from fastapi import FastAPI, Depends, HTTPException, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -18,6 +17,9 @@ from app.database.schemas import UserModel
 from fastapi.security import OAuth2PasswordRequestForm
 from app.services.auth import auth_service
 from app.database.models import User
+
+from app.routes import auth, users, history, upload, chat
+
 
 app = FastAPI()
 
@@ -47,8 +49,12 @@ app.include_router(users.router, prefix="/api")
 app.include_router(history.router, prefix="/api")
 app.include_router(upload_llm.router, prefix="/api")
 app.include_router(llm_ws.router, prefix="/api")
+app.include_router(upload.router, prefix="/api")
+app.include_router(chat.router, prefix="/api")
+
 
 
 if __name__ == '__main__':
     # uvicorn.run(app, host='https://llm-project-2023.fly.dev', port=8000)
-    uvicorn.run(app, host='localhost', port=8080)
+    #uvicorn.run("main:app", host="127.0.0.1", port=8001, reload=True)
+    uvicorn.run(app, host='localhost', port=8000)
