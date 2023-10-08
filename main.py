@@ -17,6 +17,13 @@ from app.database.schemas import UserModel
 from fastapi.security import OAuth2PasswordRequestForm
 from app.services.auth import auth_service
 from app.database.models import User
+from fastapi.websockets import WebSocket
+from langchain.vectorstores import FAISS
+from langchain.llms.openai import OpenAI, AzureOpenAI
+from langchain.embeddings.openai import OpenAIEmbeddings
+from app.repository.llm import create_llm, question_from_llm
+from app.database.config import OPENAI_API_KEY
+from langchain.chains.question_answering import load_qa_chain
 
 from app.routes import auth, users, history, upload, chat
 
@@ -30,6 +37,26 @@ app.mount('/static', StaticFiles(directory='app/static'), name='static')
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse('index.html', {"request": request})
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    new_memory = FAISS.load_local("/LLM_PROJECT/Data/llm.yaml", embeddings=OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY))
+    new_llm = AzureOpenAI(temperature=0.5, max_tokens=500) 
+    llm_chain = load_qa_chain(new_llm, chain_type="refine")
+    await websocket.accept()
+    await websocket.send_text("Welcome to the chat!")
+    try:
+        while True:
+            data = await websocket.receive_text()
+            await websocket.send_text(f"You question: {data}")
+            # await repository_history.create_message(chat_id, user_id, data, db)
+            answer = llm_chain({"input_documents": new_memory, "question": data, "language": "English", "existing_answer" : ""}, return_only_outputs=True)
+            await websocket.send_text(f"Answer: {answer}")
+            # await websocket.send_text(f"Answer 2: {new_memory.similarity_search(data)}")
+            
+    except:
+        await websocket.close()
+        return templates.TemplateResponse("start_chat")
 
 
 @app.get("/api/healthchecker")

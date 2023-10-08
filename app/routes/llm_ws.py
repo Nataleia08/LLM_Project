@@ -24,19 +24,3 @@ async def start_chat(request: Request):
     return templates.TemplateResponse("chat.html", {"request": request})
 
 
-@router.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    new_memory = FAISS()
-    new_memory.load_local("/LLM_PROJECT/Data/llm.yaml")
-    await websocket.accept()
-    await websocket.send_text("Welcome to the chat!")
-    try:
-        while True:
-            data = await websocket.receive_text()
-            await websocket.send_text(f"You question: {data}")
-            # await repository_history.create_message(chat_id, user_id, data, db)
-            answer = new_memory.embed_query(data)
-            await websocket.send_text(f"Answer: {answer}")
-    except:
-        await websocket.remove()
-        return templates.TemplateResponse("start_chat")

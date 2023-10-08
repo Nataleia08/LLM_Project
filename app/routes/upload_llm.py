@@ -52,6 +52,6 @@ async def crete_llm(request: Request, file: UploadFile = File(...), db: Session 
 
     if new_memory is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Memory not save!")
-    return templates.TemplateResponse("chat.html", {"request": request})
+    return templates.TemplateResponse("chat_ws.html", {"request": request})
 
 
