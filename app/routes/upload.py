@@ -1,22 +1,17 @@
 from fastapi import APIRouter, File, UploadFile, HTTPException, Request, Depends
 from fastapi.templating import Jinja2Templates
-import cloudinary
 from cloudinary.uploader import upload
-from app.database.config import settings
+from app.database.config import config_cloudinary
 from app.database.models import User
 from app.services.auth import auth_service
-from fastapi.responses import RedirectResponse
 
 
 router = APIRouter(prefix="/upload-pdf", tags=["upload-pdf"])
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="app/templates")
 
-cloudinary.config(
-    cloud_name=settings.cloud_name,
-    api_key=settings.cloud_api_key,
-    api_secret=settings.cloud_api_secret
-)
+config_cloudinary()
+
 
 @router.get("/")
 async def display_upload_form(request: Request, current_user: User = Depends(auth_service.get_current_user)):
