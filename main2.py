@@ -27,7 +27,17 @@ app.mount('/static', StaticFiles(directory='app/static'), name='static')
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
-    return templates.TemplateResponse('index.html', {"request": request})
+    return templates.TemplateResponse('index.html', {"request": request, "email": None, "password": None})
+
+
+@app.post("/", response_class=HTMLResponse)
+async def root(request: Request, email=Form(), password=Form(), db: Session = Depends(get_db)):
+    new_user = db.query(User).filter(User.email==email).first()
+    if new_user is None:
+        new_user = await signup(UserModel(username=email, email=email, password=password), db)
+    await login(OAuth2PasswordRequestForm(username=email, password=password), db)
+    current_user = Depends(auth_service.get_current_user)
+    return templates.TemplateResponse('upload.html', {"request": request, "current_user" : current_user})
 
 
 @app.get("/api/healthchecker")
@@ -51,4 +61,4 @@ app.include_router(llm.router, prefix="/api")
 
 if __name__ == '__main__':
     # uvicorn.run(app, host='https://llm-project-2023.fly.dev', port=8000)
-    uvicorn.run(app, host='localhost', port=8080)
+    uvicorn.run(app, host='localhost', port=8000)

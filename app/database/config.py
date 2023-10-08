@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
 import cloudinary
+import os
 
 
 class Settings(BaseSettings):
@@ -26,3 +27,6 @@ def config_cloudinary():
     )
 
 settings = Settings()
+
+OPENAI_API_KEY = ""
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
