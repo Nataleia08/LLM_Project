@@ -1,5 +1,6 @@
 import uvicorn
 from typing import Callable
+
 from fastapi import FastAPI, Depends, HTTPException, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -18,9 +19,6 @@ from fastapi.security import OAuth2PasswordRequestForm
 from app.services.auth import auth_service
 from app.database.models import User
 
-from app.routes import auth, users, history, upload, chat
-
-
 app = FastAPI()
 
 templates = Jinja2Templates(directory='app/templates')
@@ -29,7 +27,17 @@ app.mount('/static', StaticFiles(directory='app/static'), name='static')
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
-    return templates.TemplateResponse('index.html', {"request": request})
+    return templates.TemplateResponse('index.html', {"request": request, "email": None, "password": None})
+
+
+@app.post("/", response_class=HTMLResponse)
+async def root(request: Request, email=Form(), password=Form(), db: Session = Depends(get_db)):
+    new_user = db.query(User).filter(User.email==email).first()
+    if new_user is None:
+        new_user = await signup(UserModel(username=email, email=email, password=password), db)
+    await login(OAuth2PasswordRequestForm(username=email, password=password), db)
+    current_user = Depends(auth_service.get_current_user)
+    return templates.TemplateResponse('upload.html', {"request": request, "current_user" : current_user})
 
 
 @app.get("/api/healthchecker")
@@ -49,12 +57,8 @@ app.include_router(users.router, prefix="/api")
 app.include_router(history.router, prefix="/api")
 app.include_router(upload_llm.router, prefix="/api")
 app.include_router(llm_ws.router, prefix="/api")
-app.include_router(upload.router, prefix="/api")
-app.include_router(chat.router, prefix="/api")
-
 
 
 if __name__ == '__main__':
     # uvicorn.run(app, host='https://llm-project-2023.fly.dev', port=8000)
-    #uvicorn.run("main:app", host="127.0.0.1", port=8001, reload=True)
     uvicorn.run(app, host='localhost', port=8000)

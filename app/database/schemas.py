@@ -9,9 +9,10 @@ from fastapi import UploadFile
 from pydantic.types import conlist
 
 class UserModel(BaseModel):
-    username: str = Field(min_length=5, max_length=16)
+    username: str = Field(min_length=5, max_length=50)
     email: EmailStr
-    password: str = Field(min_length=6, max_length=10)
+    password: str = Field(min_length=6, max_length=50)
+
 
 
 class UserResponse(BaseModel):
@@ -33,11 +34,14 @@ class TokenModel(BaseModel):
 
 
 class UserProfileCreate(BaseModel):
-    first_name: str
-    last_name: str
-    email: EmailStr
-    phone: str
-    date_of_birth: date
+    file_path: str
+
+#     first_name: str
+#     last_name: str
+#     email: EmailStr
+#     phone: str
+#     date_of_birth: date
+
 
 
 class UserProfileResponse(BaseModel):
@@ -45,6 +49,8 @@ class UserProfileResponse(BaseModel):
     user_id: int
     first_name: str
     last_name: str
+    file_path: str
+
     email: EmailStr
     phone: str
     date_of_birth: date
@@ -56,7 +62,7 @@ class UserProfileResponse(BaseModel):
 class HistoryResponse(BaseModel):
     id: int
     chat_id: int
-    text: str
+    text_message: str
     created_at: datetime
     user_id: int
 

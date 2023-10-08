@@ -17,13 +17,11 @@
                 </div>
                 <div class="card-body">
                     <form action="/api/upload-pdf/submit/" enctype="multipart/form-data" method="post" >
-
                         <div class="custom-file mb-3">
                             <input type="file" class="custom-file-input" id="file-input" name="file">
                             <label class="custom-file-label" for="file-input">Виберіть файл</label>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block" id ="submit-btn"  disabled>Завантажити</button>
-
                     </form>
                 </div>
             </div>
@@ -50,6 +48,10 @@ $(document).ready(function() {
 });
 </script>
 
+<!-- <script>
+    function redirect(){window.location.href = "/api/chat/"}
+</script> -->
+
+
 </body>
 </html>
-

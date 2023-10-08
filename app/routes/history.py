@@ -17,13 +17,12 @@ router = APIRouter(prefix="/history", tags=["history"])
 
 
 @router.post("/save_massegas")
-async def save_messages(text: str, chat_id: str, db: Session = Depends(get_db), current_user: User = Depends(auth_service.get_current_user)):
-    history = PostgresChatMessageHistory(connection_string= settings.sqlalchemy_database_url, session_id=chat_id, table_name='message_history')
-    history.add_user_message(text)
-    return None
+async def save_messages(text: str, chat_id: str, user_id: str, db: Session = Depends(get_db), current_user: User = Depends(auth_service.get_current_user)):
+    new_message = await repository_history.create_message(chat_id, user_id, text, db)
+    return new_message
 
 
-@router.get("/save_massages/chat_id", response_model= List[HistoryResponse])
+@router.get("/chat_id", response_model= List[HistoryResponse])
 async def get_history_messages(chat_id: str, db: Session = Depends(get_db), current_user: User = Depends(auth_service.get_current_user)):
     chat_history = await repository_history.chat_history(chat_id, db)
     if chat_history is None:
@@ -31,7 +30,7 @@ async def get_history_messages(chat_id: str, db: Session = Depends(get_db), curr
             status_code=status.HTTP_404_NOT_FOUND, detail='Chat not found!')
     return chat_history
     
-@router.get("/save_massages/user_id", response_model= List[HistoryResponse])
+@router.get("/user_id", response_model= List[HistoryResponse])
 async def get_history_messages(user_id: str, db: Session = Depends(get_db), current_user: User = Depends(auth_service.get_current_user)):
     chat_history = await repository_history.user_history(user_id, db)
     if chat_history is None:
@@ -39,9 +38,9 @@ async def get_history_messages(user_id: str, db: Session = Depends(get_db), curr
             status_code=status.HTTP_404_NOT_FOUND, detail='Chat not found!')
     return chat_history   
 
-@router.delete("/save_massages/message_id")
+@router.delete("/message_id")
 async def get_history_messages(chat_id:str, message_id: str, db: Session = Depends(get_db), current_user: User = Depends(auth_service.get_current_user)):
-    delete_message = db.query(MessageHistory).filter(and_(MessageHistory.chat_id == chat_id, MessageHistory.message_id == message_id)).first()
+    delete_message = db.query(MessageHistory).filter(and_(MessageHistory.chat_id == chat_id, MessageHistory.id == message_id)).first()
     if delete_message is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Message not found!')
     db.delete(delete_message)
