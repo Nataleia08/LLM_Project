@@ -5,8 +5,8 @@ from langchain.memory import PostgresChatMessageHistory
 from app.database.config import settings
 from app.services.auth import auth_service
 
-from app.app.models import MessageHistory, User
-from app.app.schemas import HistoryResponse
+from app.database.models import MessageHistory, User
+from app.database.schemas import HistoryResponse
 from app.repository import history as repository_history
 from app.database.db import get_db
 from typing import List

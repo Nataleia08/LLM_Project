@@ -12,12 +12,12 @@ from starlette.middleware.cors import CORSMiddleware   #------------
 
 from app.database.config import settings
 from app.database.db import get_db
-from app.routes import auth, llm, upload, users, history
+from app.routes import auth, llm_ws, upload, users, history
 from app.routes.auth import signup, login
-from app.app.schemas import UserModel
+from app.database.schemas import UserModel
 from fastapi.security import OAuth2PasswordRequestForm
 from app.services.auth import auth_service
-from app.app.models import User
+from app.database.models import User
 
 app = FastAPI()
 
@@ -46,7 +46,7 @@ app.include_router(auth.router, prefix="/api")
 app.include_router(users.router, prefix="/api")
 app.include_router(history.router, prefix="/api")
 app.include_router(upload.router, prefix="/api")
-app.include_router(llm.router, prefix="/api")
+app.include_router(llm_ws.router, prefix="/api")
 
 
 if __name__ == '__main__':

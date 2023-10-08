@@ -6,30 +6,28 @@ authors = ["Nataleia Orlovska <nataleia.orlovska@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.11.5"
+python = "^3.10"
+fastapi = "^0.103.2"
 alembic = "^1.12.0"
 sqlalchemy = "^2.0.21"
-fastapi = "^0.103.1"
-psycopg2-binary = "^2.9.8"
-uvicorn = {extras = ["standard"], version = "^0.23.2"}
+psycopg2-binary = "^2.9.9"
+uvicorn = "^0.23.2"
 fastapi-limiter = "^0.1.5"
-cloudinary = "^1.35.0"
+cloudinary = "^1.36.0"
 pydantic-settings = "^2.0.3"
-pydantic = {extras = ["email"], version = "^2.4.2"}
+pydantic = "^2.4.2"
 libgravatar = "^1.0.4"
-python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+python-jose = "^3.3.0"
 passlib = "^1.7.4"
 python-multipart = "^0.0.6"
 jinja2 = "^3.1.2"
-langchain = "^0.0.305"
+langchain = "^0.0.310"
 bcrypt = "^4.0.1"
 openai = "^0.28.1"
 websockets = "^11.0.3"
-wsproto = "^1.2.0"
-pypdf = "^3.16.2"
+pypdf = "^3.16.3"
 tiktoken = "^0.5.1"
 faiss-cpu = "^1.7.4"
-aspose-words = "^23.9.0"
 asyncio = "^3.4.3"
 
 

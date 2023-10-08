@@ -2,8 +2,8 @@ import logging
 
 from sqlalchemy.orm import Session, Query
 
-from app.app.models import UserProfile
-from app.app.schemas import UserProfileCreate
+from app.database.models import UserProfile
+from app.database.schemas import UserProfileCreate
 
 
 async def create_user_profile(file_path: str, file_name: str, user_id: str, db: Session):

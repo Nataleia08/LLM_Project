@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.database.config import settings
 from app.services.auth import auth_service
 
-from app.app.models import Chat, User, UserProfile
+from app.database.models import Chat, User, UserProfile
 from app.repository import llm as repository_llm
 from app.repository import memory as repository_memory
 from app.repository import history as repository_history

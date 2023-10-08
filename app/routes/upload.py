@@ -3,7 +3,7 @@ from fastapi.templating import Jinja2Templates
 import cloudinary
 from cloudinary.uploader import upload
 from app.database.config import settings
-from app.app.models import User, Chat
+from app.database.models import User, Chat
 from app.services.auth import auth_service
 from app.repository.user_profile import create_user_profile
 from app.database.db import get_db

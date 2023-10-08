@@ -3,8 +3,8 @@ from typing import List
 from sqlalchemy.orm import Session
 
 
-from app.app.models import MessageHistory
-from app.app.schemas import HistoryResponse
+from app.database.models import MessageHistory
+from app.database.schemas import HistoryResponse
 
 async def chat_history(chat_id: str, db: Session) -> List[HistoryResponse] | None:
     return db.query(MessageHistory).filter(MessageHistory.chat_id == chat_id).all()
