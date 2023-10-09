@@ -1,34 +1,123 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Chat</title>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    </head>
-    <body>
-        <h1>Chat</h1>
-        <ul id='messages'>
-        </ul>
-        <form action="" onsubmit="sendMessage(event)">
-            <input type="text" id="messageText" autocomplete="off"/>
-            <button color = #6D9BF5>Send</button>
-        </form>
+  <head>
+    <title>Chat</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="chat__header">Chat</h1>
+      <a href="http://localhost:8080/" justify-content="right">
+        <button >Exit</button>
+    </a>
+      <div class="chat__window">
+        <ul class="chat__list" id="messages"></ul>
+      </div>
+      <form class="chat__form" action="" onsubmit="sendMessage(event)">
+        <input
+          class="chat__input"
+          type="text"
+          id="messageText"
+          autocomplete="off"
+        />
+        <button class="chat__button" color="#6D9BF5">Send</button>
+      </form>
+    </div>
+    <style>
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border: 2px solid #efede8;
+        background-color: #6b7280;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px auto;
+      }
 
-        <script>
-            var ws = new WebSocket("ws://localhost:8080/ws");
-            ws.onmessage = function(event) {
-                var messages = document.getElementById('messages')
-                var message = document.createElement('li')
-                var content = document.createTextNode(event.data)
-                message.appendChild(content)
-                messages.appendChild(message)
-            };
-            function sendMessage(event) {
-                var input = document.getElementById("messageText")
-                ws.send(input.value)
-                input.value = ''
-                event.preventDefault()
-            }
-        </script>
-    </body>
+      .chat__header {
+        margin-top: 15px;
+      }
+
+      .chat__window {
+        display: flex;
+        width: 1100px;
+        height: 600px;
+        margin-top: 15px;
+        border: 1px solid #d1d5db;
+        border-radius: 5px;
+        background-color: #ffffff;
+      }
+
+      .chat__list {
+        width: 100%;
+        list-style: none;
+        padding: 15px;
+      }
+
+      li {
+        display: flex;
+        justify-content: right;
+      }
+
+      .chat__form {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+      }
+
+      .chat__input {
+        border: none;
+        border-radius: 50px;
+        height: 40px;
+        width: 600px;
+      }
+
+      .chat__button {
+        margin-left: 20px;
+        border: none;
+        border-radius: 50px;
+        height: 40px;
+        width: 60px;
+        background-color: #fafafa;
+        text-align: center;
+        font-family: inherit;
+        font-weight: 500;
+        font-size: 16px;
+        padding: 5px;
+      }
+
+      .chat__button:focus {
+        background-color: #e0dee9;
+      }
+
+      .chat__button:hover {
+        background-color: #e0dee9;
+      }
+    </style>
+    <script>
+      var ws = new WebSocket("ws://localhost:8080/ws");
+      ws.onmessage = function (event) {
+        var messages = document.getElementById("messages");
+        var message = document.createElement("li");
+        window.scrollTo(0, message.innerHeight);
+        var content = document.createTextNode(event.data);
+        message.appendChild(content);
+        messages.appendChild(message);
+      };
+      function sendMessage(event) {
+        var input = document.getElementById("messageText");
+        ws.send(input.value);
+        input.value = "";
+        event.preventDefault();
+      }
+    </script>
+
+  </body>
 </html>
-"""

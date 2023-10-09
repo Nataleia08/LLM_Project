@@ -28,7 +28,7 @@ def config_cloudinary():
 
 settings = Settings()
 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = ""
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 # os.environ["OPENAI_API_TYPE"] = "azure"
 # os.environ["OPENAI_API_VERSION"] = "2023-10-01"

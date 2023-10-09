@@ -19,12 +19,14 @@ from langchain.vectorstores import FAISS
 from app.repository import users as repository_users
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer, OAuth2PasswordBearer
 from app.database.config import OPENAI_API_KEY
+from fastapi.staticfiles import StaticFiles
 
 security = HTTPBearer()
 
 router = APIRouter(prefix="/upload-pdf", tags=["upload-pdf"])
 
 templates = Jinja2Templates(directory="app/templates")
+router.mount('/static', StaticFiles(directory='app/static'), name='static')
 
 cloudinary.config(
     cloud_name=settings.cloud_name,
