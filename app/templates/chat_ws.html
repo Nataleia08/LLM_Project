@@ -9,10 +9,15 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="chat__header">Chat</h1>
-      <a href="http://localhost:8080/" justify-content="right">
-        <button >Exit</button>
-    </a>
+      <div class="header__container">
+        <a href="/">
+          <button class="chat__exit-btn" onsubmit="closeChat(event)">
+            Exit
+          </button>
+        </a>
+        <h1 class="chat__header">Chat</h1>
+      </div>
+
       <div class="chat__window">
         <ul class="chat__list" id="messages"></ul>
       </div>
@@ -39,8 +44,18 @@
         margin: 10px auto;
       }
 
+      .header__container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 10px;
+        padding: 0 10px;
+        width: 100%;
+      }
+
       .chat__header {
-        margin-top: 15px;
+        margin: auto;
+        color: #ffffff;
       }
 
       .chat__window {
@@ -51,6 +66,10 @@
         border: 1px solid #d1d5db;
         border-radius: 5px;
         background-color: #ffffff;
+      }
+
+      .chat__window::-webkit-scrollbar {
+        width: 10px;
       }
 
       .chat__list {
@@ -100,6 +119,14 @@
       .chat__button:hover {
         background-color: #e0dee9;
       }
+      .chat__exit-btn {
+        display: flex;
+        justify-content: left;
+        border: none;
+        border-radius: 5px;
+        background-color: #e0dee9;
+        padding: 5px;
+      }
     </style>
     <script>
       var ws = new WebSocket("ws://localhost:8080/ws");
@@ -117,7 +144,9 @@
         input.value = "";
         event.preventDefault();
       }
+      function closeChat(event) {
+        ws.CLOSED;
+      }
     </script>
-
   </body>
 </html>

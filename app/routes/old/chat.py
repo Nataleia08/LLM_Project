@@ -9,7 +9,7 @@ from app.repository import chat as repository_chats
 from app.database.schemas import ChatModel
 from app.services.auth import auth_service
 
-router = APIRouter(prefix='/chats', tags=["chats"])
+router = APIRouter(prefix='/new_chats', tags=["new_chats"])
 
 
 @router.post("/ask", status_code=status.HTTP_201_CREATED)

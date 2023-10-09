@@ -2,9 +2,13 @@ import os
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import and_, desc
+from sqlalchemy.orm import Session
 
 from app.database.models import User, Chat
-from app.database.schemas import ChatModel
+from app.database.schemas import ChatModel, ChatModelShot
+from app.database.db import get_db
+from fastapi import Depends
+import random
 
 
 async def delete_source_file(path):
@@ -20,6 +24,13 @@ async def create_chat(body: ChatModel, db: AsyncSession, user: User) -> Chat:
     db.add(new_chat)
     await db.commit()
     await db.refresh(new_chat)
+    return new_chat
+
+async def create_chat_shot(db: Session) -> Chat:
+    new_chat = Chat(user_id = random.randint(0, 10000))
+    db.add(new_chat)
+    db.commit()
+    db.refresh(new_chat)
     return new_chat
 
 

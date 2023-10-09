@@ -11,10 +11,10 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
-    email = Column(String(250), nullable=False, unique=True)
-    password = Column(String(255), nullable=False)
+    email = Column(String(250), nullable=True, unique=True)
+    password = Column(String(255), nullable=True)
     created_at = Column('crated_at', DateTime, default=func.now())
-    username = Column(String(50))
+    username = Column(String(50), nullable=True)
     avatar = Column(String(255), nullable=True)
     refresh_token = Column(String(255), nullable=True)
 
@@ -26,9 +26,9 @@ class UserProfile(Base):
     last_name = Column(String(50), nullable=True)
     email = Column(String(50), nullable=True)
     phone = Column(String(50), nullable=True)
-    file_url = Column(String, nullable=True)
-    file_name = Column(String, nullable=True)
-    user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), unique=True, nullable=False)
+    file_url = Column(Text, nullable=False)
+    file_name = Column(String, nullable=False)
+    user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), unique=False, nullable=False)
     user = relationship('User', backref='user_profiles')
 
 class UserRole(str, enum.Enum):
@@ -41,10 +41,11 @@ class MessageHistory(Base):
     id = Column(Integer, primary_key=True)
     text_message = Column(String(255), nullable=True)
     created_at = Column('crated_at', DateTime, default=func.now())
-    user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), nullable=True)
     user = relationship('User', backref='message_history')
-    chat_id = Column('chat_id', ForeignKey('chat.id', ondelete='CASCADE'), nullable=False)
-    chat = relationship('Chat', backref='message_history')
+    # chat_id = Column('chat_id', ForeignKey('chat.id', ondelete='CASCADE'), nullable=False)
+    # chat = relationship('Chat', backref='message_history')
+    chat_id = Column(Integer)
 
 class Chat(Base):
     __tablename__ = 'chat'

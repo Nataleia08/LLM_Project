@@ -80,3 +80,12 @@ class ChatModel(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class ChatModelShot(BaseModel):
+    id: int
+    created_at: datetime | None
+    user_id: int
+
+    class Config:
+        orm_mode = True
