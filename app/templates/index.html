@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload PDF</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .custom-file-label {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 <body class="bg-light py-5">
 
@@ -19,7 +29,7 @@
                     <form action="/api/upload-pdf/submit/" enctype="multipart/form-data" method="post" >
 
                         <div class="custom-file mb-3">
-                            <input type="file" class="custom-file-input" id="file-input" name="file">
+                            <input type="file" class="custom-file-input" id="file-input" name="file" multiple>
                             <label class="custom-file-label" for="file-input">Виберіть файл</label>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block" id ="submit-btn"  disabled>Завантажити</button>
@@ -34,22 +44,27 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script defer>
+$('#file-input').on('change', function() {
+    var fileNames = [];
+    for (var i = 0; i < this.files.length; i++) {
+        fileNames.push(this.files[i].name);
+    }
+    var fileLabelText = fileNames.join(', ');
 
-<script>
-$(document).ready(function() {
-    $('#file-input').on('change', function() {
-        var fileName = $(this).val().split('\\').pop();
-        $(this).siblings('.custom-file-label').addClass("selected").html(fileName);
+    if (fileLabelText.length > 50) {
+        fileLabelText = fileLabelText.substr(0, 50) + '...';
+    }
 
-        if ($(this).val()) {
-            $('#submit-btn').removeAttr('disabled');
-        } else {
-            $('#submit-btn').attr('disabled', 'disabled');
-        }
-    });
+    $(this).siblings('.custom-file-label').addClass("selected").html(fileLabelText).attr('title', fileNames.join(', '));
+
+    if (fileNames.length > 0) {
+        $('#submit-btn').removeAttr('disabled');
+    } else {
+        $('#submit-btn').attr('disabled', 'disabled');
+    }
 });
 </script>
-
 </body>
 </html>
 
