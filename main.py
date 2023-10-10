@@ -43,7 +43,7 @@ async def websocket_endpoint(websocket: WebSocket, db: Session = Depends(get_db)
             data = await websocket.receive_text()
             await websocket.send_text(f"Your question: {data}")
             await create_message(chat_id, data, db)
-            answer = llm_chain({"input_documents": new_memory.similarity_search(data), "question": data, "language": "English", "existing_answer" : ""}, return_only_outputs=True)
+            answer = llm_chain({"input_documents": new_memory.similarity_search(data), "question": data, "existing_answer" : ""}, return_only_outputs=True) #"language": "English"
             text_answer = answer["output_text"]
             await websocket.send_text(f"Answer: {text_answer}")
             
