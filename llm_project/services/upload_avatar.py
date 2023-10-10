@@ -3,7 +3,7 @@ import hashlib
 import cloudinary
 import cloudinary.uploader
 
-from app.database.config import settings, config_cloudinary
+from llm_project.database.config import settings, config_cloudinary
 
 
 class UploadService:

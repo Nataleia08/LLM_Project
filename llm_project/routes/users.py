@@ -3,12 +3,12 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
-from app.database.db import get_db
-from app.database.models import User
-from app.repository import users as repository_users
-from app.services.auth import auth_service
+from llm_project.database.db import get_db
+from llm_project.database.models import User
+from llm_project.repository import users as repository_users
+from llm_project.services.auth import auth_service
 # from src.services.upload_avatar import UploadService
-from app.database.schemas import UserResponse
+from llm_project.database.schemas import UserResponse
 
 router = APIRouter(prefix="/users", tags=["users"])
 templates = Jinja2Templates(directory='templates')

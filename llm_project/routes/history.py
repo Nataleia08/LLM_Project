@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
 from langchain.memory import PostgresChatMessageHistory
-from app.database.config import settings
-from app.services.auth import auth_service
+from llm_project.database.config import settings
+from llm_project.services.auth import auth_service
 
-from app.database.models import MessageHistory, User
-from app.database.schemas import HistoryResponse
-from app.repository import history as repository_history
-from app.database.db import get_db
+from llm_project.database.models import MessageHistory, User
+from llm_project.database.schemas import HistoryResponse
+from llm_project.repository import history as repository_history
+from llm_project.database.db import get_db
 from typing import List
 from sqlalchemy import and_
 

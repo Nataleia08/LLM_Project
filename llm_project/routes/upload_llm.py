@@ -26,8 +26,8 @@ security = HTTPBearer()
 
 router = APIRouter(prefix="/upload-pdf", tags=["upload-pdf"])
 
-templates = Jinja2Templates(directory="app/templates")
-router.mount('/static', StaticFiles(directory='app/static'), name='static')
+templates = Jinja2Templates(directory="llm_project/templates")
+router.mount('/static', StaticFiles(directory='llm_project/static'), name='static')
 
 cloudinary.config(
     cloud_name=settings.cloud_name,

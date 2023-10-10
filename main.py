@@ -22,8 +22,8 @@ import random
 
 app = FastAPI()
 
-templates = Jinja2Templates(directory='app/templates')
-app.mount('/static', StaticFiles(directory='app/static'), name='static')
+templates = Jinja2Templates(directory='llm_project/templates')
+app.mount('/static', StaticFiles(directory='llm_project/static'), name='static')
 
 
 @app.get("/", response_class=HTMLResponse)
