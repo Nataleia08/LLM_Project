@@ -62,6 +62,7 @@ async def websocket_endpoint(websocket: WebSocket, db: Session = Depends(get_db)
             await websocket.send_text(f"Answer: {text_answer}")
             
     except WebSocketDisconnect:
+        new_memory.delete()
         return None
 
 
